@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 const validateMiddleware = require("../middlewares/validateMiddleware");
-const { createDonation, getAllDonations } = require("../controllers/DonationController");
+const { createDonation, getAllDonations } = require("../controllers/donationController");
 const router = require("express").Router();
 
 const createDonationRules = [
