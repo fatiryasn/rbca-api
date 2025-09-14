@@ -6,6 +6,8 @@ const sequelize = require("./configs/database");
 
 const donationRoute = require("./routes/donationRoute")
 const commonRoute = require("./routes/commonRoute")
+const authRoute = require("./routes/authRoute")
+const userRoute = require("./routes/userRoute")
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -15,6 +17,8 @@ app.use(cors({ credentials: true, origin: true }));
 
 app.use("/api", donationRoute)
 app.use("/api", commonRoute)
+app.use("/api/auth", authRoute)
+app.use ("/api", userRoute)
 
 app.get("/", (req, res) => {
   res.send("Rumah Baca API");

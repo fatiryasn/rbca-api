@@ -1,12 +1,19 @@
 const { body } = require("express-validator");
 const validateMiddleware = require("../middlewares/validateMiddleware");
-const { createDonation, getAllDonations } = require("../controllers/donationController");
+const verifyToken = require("../middlewares/verifyToken");
+const {
+  getAllUserDonations,
+  createDonation,
+  getAllDonations,
+  getDonationById,
+} = require("../controllers/DonationController");
 const router = require("express").Router();
 
 const createDonationRules = [
   body("userId").optional(),
 
   body("name")
+    .trim()
     .if(body("isAnonymous").equals("false"))
     .notEmpty()
     .withMessage("Nama dan email wajib diisi jika tidak anonim")
@@ -16,6 +23,7 @@ const createDonationRules = [
     .withMessage("Nama terlalu panjang (max 30 karakter)"),
 
   body("email")
+    .trim()
     .if(body("isAnonymous").equals("false"))
     .notEmpty()
     .withMessage("Nama dan email wajib diisi jika tidak anonim")
@@ -29,6 +37,7 @@ const createDonationRules = [
     .withMessage("Jumlah donasi harus lebih besar dari 0"),
 
   body("message")
+    .trim()
     .optional()
     .isLength({ max: 150 })
     .withMessage("Pesan terlalu panjang (max 150 karakter)"),
@@ -40,8 +49,14 @@ const createDonationRules = [
     .withMessage("Data isAnonymous invalid"),
 ];
 
-//get all donation
-router.get("/donation", getAllDonations)
+//get all donations
+router.get("/donation", verifyToken(["Admin"]), getAllDonations)
+
+//get user donations
+router.get("/donation/user", verifyToken(), getAllUserDonations)
+
+//get donation by id
+router.get("/donation/:id", verifyToken(), getDonationById)
 
 //create new donation
 router.post(

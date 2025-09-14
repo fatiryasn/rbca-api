@@ -44,10 +44,19 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    profilePicturePublicId: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+    },
+    isComplete: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     },
     refreshToken: {
       type: DataTypes.STRING,
