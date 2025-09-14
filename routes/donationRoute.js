@@ -6,7 +6,7 @@ const {
   createDonation,
   getAllDonations,
   getDonationById,
-} = require("../controllers/DonationController");
+} = require("../controllers/donationController");
 const router = require("express").Router();
 
 const createDonationRules = [
